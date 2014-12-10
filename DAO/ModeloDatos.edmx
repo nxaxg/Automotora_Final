@@ -1,0 +1,589 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Model.Store" Alias="Self" Provider="Oracle.DataAccess.Client" ProviderManifestToken="10.2" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="ModelStoreContainer">
+          <EntitySet Name="AUTOMOVIL" EntityType="Model.Store.AUTOMOVIL" store:Type="Tables" Schema="AUTOM" />
+          <EntitySet Name="DISTRIBUIDORA" EntityType="Model.Store.DISTRIBUIDORA" store:Type="Tables" Schema="AUTOM" />
+          <EntitySet Name="EVT_REPUESTO_USADO" EntityType="Model.Store.EVT_REPUESTO_USADO" store:Type="Tables" Schema="AUTOM" />
+          <EntitySet Name="PERFIL" EntityType="Model.Store.PERFIL" store:Type="Tables" Schema="AUTOM" />
+          <EntitySet Name="REPUESTO" EntityType="Model.Store.REPUESTO" store:Type="Tables" Schema="AUTOM" />
+          <EntitySet Name="STOCK" EntityType="Model.Store.STOCK" store:Type="Tables" Schema="AUTOM" />
+          <EntitySet Name="TALLER" EntityType="Model.Store.TALLER" store:Type="Tables" Schema="AUTOM" />
+          <AssociationSet Name="PERTENECEN" Association="Model.Store.PERTENECEN">
+            <End Role="DISTRIBUIDORA" EntitySet="DISTRIBUIDORA" />
+            <End Role="PERFIL" EntitySet="PERFIL" />
+          </AssociationSet>
+          <AssociationSet Name="PERTENECIENTE" Association="Model.Store.PERTENECIENTE">
+            <End Role="REPUESTO" EntitySet="REPUESTO" />
+            <End Role="STOCK" EntitySet="STOCK" />
+          </AssociationSet>
+          <AssociationSet Name="POSEE" Association="Model.Store.POSEE">
+            <End Role="TALLER" EntitySet="TALLER" />
+            <End Role="PERFIL" EntitySet="PERFIL" />
+          </AssociationSet>
+          <AssociationSet Name="RELACION" Association="Model.Store.RELACION">
+            <End Role="TALLER" EntitySet="TALLER" />
+            <End Role="DISTRIBUIDORA" EntitySet="DISTRIBUIDORA" />
+          </AssociationSet>
+          <AssociationSet Name="SERA_USADO" Association="Model.Store.SERA_USADO">
+            <End Role="STOCK" EntitySet="STOCK" />
+            <End Role="EVT_REPUESTO_USADO" EntitySet="EVT_REPUESTO_USADO" />
+          </AssociationSet>
+          <AssociationSet Name="TIENE" Association="Model.Store.TIENE">
+            <End Role="TALLER" EntitySet="TALLER" />
+            <End Role="STOCK" EntitySet="STOCK" />
+          </AssociationSet>
+          <AssociationSet Name="USADO" Association="Model.Store.USADO">
+            <End Role="AUTOMOVIL" EntitySet="AUTOMOVIL" />
+            <End Role="EVT_REPUESTO_USADO" EntitySet="EVT_REPUESTO_USADO" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="AUTOMOVIL">
+          <Key>
+            <PropertyRef Name="VIN_AUTOMOVIL" />
+          </Key>
+          <Property Name="VIN_AUTOMOVIL" Type="varchar2" Nullable="false" MaxLength="30" />
+          <Property Name="MARCA_AUTOMOVIL" Type="varchar2" Nullable="false" MaxLength="40" />
+          <Property Name="MODELO_AUTOMOVIL" Type="varchar2" Nullable="false" MaxLength="40" />
+          <Property Name="AÑO_AUTOMOVIL" Type="number" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DISTRIBUIDORA">
+          <Key>
+            <PropertyRef Name="RUT_DIST" />
+          </Key>
+          <Property Name="RUT_DIST" Type="varchar2" Nullable="false" MaxLength="20" />
+          <Property Name="NOMBRE_DIST" Type="varchar2" Nullable="false" MaxLength="50" />
+          <Property Name="DIRECCION_DIST" Type="varchar2" Nullable="false" MaxLength="60" />
+          <Property Name="TELEFONO_DIST" Type="varchar2" Nullable="false" MaxLength="10" />
+          <Property Name="RUT_TALLER" Type="varchar2" Nullable="false" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="EVT_REPUESTO_USADO">
+          <Key>
+            <PropertyRef Name="ID_REP_USADO" />
+          </Key>
+          <Property Name="ID_REP_USADO" Type="varchar2" Nullable="false" MaxLength="20" />
+          <Property Name="FECHA_USO" Type="date" Nullable="false" />
+          <Property Name="PRECIO_UNITARIO" Type="number" Nullable="false" />
+          <Property Name="ID_STOCK" Type="varchar2" Nullable="false" MaxLength="20" />
+          <Property Name="VIN_AUTOMOVIL" Type="varchar2" Nullable="false" MaxLength="30" />
+          <Property Name="CANTIDAD_SALIDA" Type="number" />
+        </EntityType>
+        <EntityType Name="PERFIL">
+          <Key>
+            <PropertyRef Name="USERNAME" />
+          </Key>
+          <Property Name="USERNAME" Type="varchar2" Nullable="false" MaxLength="50" />
+          <Property Name="PASSWORD" Type="varchar2" Nullable="false" MaxLength="20" />
+          <Property Name="TIPO_PERMISO" Type="number" Nullable="false" />
+          <Property Name="RUT_DIST" Type="varchar2" Nullable="false" MaxLength="20" />
+          <Property Name="RUT_TALLER" Type="varchar2" Nullable="false" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="REPUESTO">
+          <Key>
+            <PropertyRef Name="ID_REPUESTO" />
+          </Key>
+          <Property Name="ID_REPUESTO" Type="varchar2" Nullable="false" MaxLength="20" />
+          <Property Name="MARCA" Type="varchar2" Nullable="false" MaxLength="50" />
+          <Property Name="CALIDAD" Type="varchar2" Nullable="false" MaxLength="40" />
+          <Property Name="ORIGEN" Type="varchar2" Nullable="false" MaxLength="40" />
+          <Property Name="ESTADO" Type="varchar2" Nullable="false" MaxLength="20" />
+          <Property Name="NOMBRE_REPUESTO" Type="varchar2" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="STOCK">
+          <Key>
+            <PropertyRef Name="ID_STOCK" />
+          </Key>
+          <Property Name="ID_STOCK" Type="varchar2" Nullable="false" MaxLength="20" />
+          <Property Name="CANTIDAD_STOCK" Type="number" Nullable="false" />
+          <Property Name="FECHA_LLEGADA" Type="date" Nullable="false" />
+          <Property Name="ID_REPUESTO" Type="varchar2" Nullable="false" MaxLength="20" />
+          <Property Name="RUT_TALLER" Type="varchar2" Nullable="false" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="TALLER">
+          <Key>
+            <PropertyRef Name="RUT_TALLER" />
+          </Key>
+          <Property Name="RUT_TALLER" Type="varchar2" Nullable="false" MaxLength="20" />
+          <Property Name="NOMBRE_TALLER" Type="varchar2" Nullable="false" MaxLength="50" />
+          <Property Name="ROL_TALLER" Type="varchar2" Nullable="false" MaxLength="50" />
+          <Property Name="DIRECCION_TALLER" Type="varchar2" Nullable="false" MaxLength="60" />
+          <Property Name="TELEFONO_TALLER" Type="varchar2" Nullable="false" MaxLength="10" />
+        </EntityType>
+        <Association Name="PERTENECEN">
+          <End Role="DISTRIBUIDORA" Type="Model.Store.DISTRIBUIDORA" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PERFIL" Type="Model.Store.PERFIL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DISTRIBUIDORA">
+              <PropertyRef Name="RUT_DIST" />
+            </Principal>
+            <Dependent Role="PERFIL">
+              <PropertyRef Name="RUT_DIST" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PERTENECIENTE">
+          <End Role="REPUESTO" Type="Model.Store.REPUESTO" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="STOCK" Type="Model.Store.STOCK" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="REPUESTO">
+              <PropertyRef Name="ID_REPUESTO" />
+            </Principal>
+            <Dependent Role="STOCK">
+              <PropertyRef Name="ID_REPUESTO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="POSEE">
+          <End Role="TALLER" Type="Model.Store.TALLER" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PERFIL" Type="Model.Store.PERFIL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TALLER">
+              <PropertyRef Name="RUT_TALLER" />
+            </Principal>
+            <Dependent Role="PERFIL">
+              <PropertyRef Name="RUT_TALLER" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RELACION">
+          <End Role="TALLER" Type="Model.Store.TALLER" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="DISTRIBUIDORA" Type="Model.Store.DISTRIBUIDORA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TALLER">
+              <PropertyRef Name="RUT_TALLER" />
+            </Principal>
+            <Dependent Role="DISTRIBUIDORA">
+              <PropertyRef Name="RUT_TALLER" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SERA_USADO">
+          <End Role="STOCK" Type="Model.Store.STOCK" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="EVT_REPUESTO_USADO" Type="Model.Store.EVT_REPUESTO_USADO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="STOCK">
+              <PropertyRef Name="ID_STOCK" />
+            </Principal>
+            <Dependent Role="EVT_REPUESTO_USADO">
+              <PropertyRef Name="ID_STOCK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TIENE">
+          <End Role="TALLER" Type="Model.Store.TALLER" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="STOCK" Type="Model.Store.STOCK" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TALLER">
+              <PropertyRef Name="RUT_TALLER" />
+            </Principal>
+            <Dependent Role="STOCK">
+              <PropertyRef Name="RUT_TALLER" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="USADO">
+          <End Role="AUTOMOVIL" Type="Model.Store.AUTOMOVIL" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="EVT_REPUESTO_USADO" Type="Model.Store.EVT_REPUESTO_USADO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AUTOMOVIL">
+              <PropertyRef Name="VIN_AUTOMOVIL" />
+            </Principal>
+            <Dependent Role="EVT_REPUESTO_USADO">
+              <PropertyRef Name="VIN_AUTOMOVIL" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AUTOMOVIL" EntityType="Model.AUTOMOVIL" />
+          <EntitySet Name="DISTRIBUIDORA" EntityType="Model.DISTRIBUIDORA" />
+          <EntitySet Name="EVT_REPUESTO_USADO" EntityType="Model.EVT_REPUESTO_USADO" />
+          <EntitySet Name="PERFIL" EntityType="Model.PERFIL" />
+          <EntitySet Name="REPUESTO" EntityType="Model.REPUESTO" />
+          <EntitySet Name="STOCK" EntityType="Model.STOCK" />
+          <EntitySet Name="TALLER" EntityType="Model.TALLER" />
+          <AssociationSet Name="USADO" Association="Model.USADO">
+            <End Role="AUTOMOVIL" EntitySet="AUTOMOVIL" />
+            <End Role="EVT_REPUESTO_USADO" EntitySet="EVT_REPUESTO_USADO" />
+          </AssociationSet>
+          <AssociationSet Name="PERTENECEN" Association="Model.PERTENECEN">
+            <End Role="DISTRIBUIDORA" EntitySet="DISTRIBUIDORA" />
+            <End Role="PERFIL" EntitySet="PERFIL" />
+          </AssociationSet>
+          <AssociationSet Name="RELACION" Association="Model.RELACION">
+            <End Role="TALLER" EntitySet="TALLER" />
+            <End Role="DISTRIBUIDORA" EntitySet="DISTRIBUIDORA" />
+          </AssociationSet>
+          <AssociationSet Name="SERA_USADO" Association="Model.SERA_USADO">
+            <End Role="STOCK" EntitySet="STOCK" />
+            <End Role="EVT_REPUESTO_USADO" EntitySet="EVT_REPUESTO_USADO" />
+          </AssociationSet>
+          <AssociationSet Name="POSEE" Association="Model.POSEE">
+            <End Role="TALLER" EntitySet="TALLER" />
+            <End Role="PERFIL" EntitySet="PERFIL" />
+          </AssociationSet>
+          <AssociationSet Name="PERTENECIENTE" Association="Model.PERTENECIENTE">
+            <End Role="REPUESTO" EntitySet="REPUESTO" />
+            <End Role="STOCK" EntitySet="STOCK" />
+          </AssociationSet>
+          <AssociationSet Name="TIENE" Association="Model.TIENE">
+            <End Role="TALLER" EntitySet="TALLER" />
+            <End Role="STOCK" EntitySet="STOCK" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="AUTOMOVIL">
+          <Key>
+            <PropertyRef Name="VIN_AUTOMOVIL" />
+          </Key>
+          <Property Name="VIN_AUTOMOVIL" Type="String" Nullable="false" MaxLength="30" Unicode="false" FixedLength="false" />
+          <Property Name="MARCA_AUTOMOVIL" Type="String" Nullable="false" MaxLength="40" Unicode="false" FixedLength="false" />
+          <Property Name="MODELO_AUTOMOVIL" Type="String" Nullable="false" MaxLength="40" Unicode="false" FixedLength="false" />
+          <Property Name="AÑO_AUTOMOVIL" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+          <NavigationProperty Name="EVT_REPUESTO_USADO" Relationship="Model.USADO" FromRole="AUTOMOVIL" ToRole="EVT_REPUESTO_USADO" />
+        </EntityType>
+        <EntityType Name="DISTRIBUIDORA">
+          <Key>
+            <PropertyRef Name="RUT_DIST" />
+          </Key>
+          <Property Name="RUT_DIST" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="NOMBRE_DIST" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="DIRECCION_DIST" Type="String" Nullable="false" MaxLength="60" Unicode="false" FixedLength="false" />
+          <Property Name="TELEFONO_DIST" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
+          <Property Name="RUT_TALLER" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="PERFIL" Relationship="Model.PERTENECEN" FromRole="DISTRIBUIDORA" ToRole="PERFIL" />
+          <NavigationProperty Name="TALLER" Relationship="Model.RELACION" FromRole="DISTRIBUIDORA" ToRole="TALLER" />
+        </EntityType>
+        <EntityType Name="EVT_REPUESTO_USADO">
+          <Key>
+            <PropertyRef Name="ID_REP_USADO" />
+          </Key>
+          <Property Name="ID_REP_USADO" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="FECHA_USO" Type="DateTime" Nullable="false" />
+          <Property Name="PRECIO_UNITARIO" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+          <Property Name="ID_STOCK" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="VIN_AUTOMOVIL" Type="String" Nullable="false" MaxLength="30" Unicode="false" FixedLength="false" />
+          <Property Name="CANTIDAD_SALIDA" Type="Decimal" Precision="38" Scale="0" />
+          <NavigationProperty Name="AUTOMOVIL" Relationship="Model.USADO" FromRole="EVT_REPUESTO_USADO" ToRole="AUTOMOVIL" />
+          <NavigationProperty Name="STOCK" Relationship="Model.SERA_USADO" FromRole="EVT_REPUESTO_USADO" ToRole="STOCK" />
+        </EntityType>
+        <EntityType Name="PERFIL">
+          <Key>
+            <PropertyRef Name="USERNAME" />
+          </Key>
+          <Property Name="USERNAME" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="PASSWORD" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="TIPO_PERMISO" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+          <Property Name="RUT_DIST" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="RUT_TALLER" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="DISTRIBUIDORA" Relationship="Model.PERTENECEN" FromRole="PERFIL" ToRole="DISTRIBUIDORA" />
+          <NavigationProperty Name="TALLER" Relationship="Model.POSEE" FromRole="PERFIL" ToRole="TALLER" />
+        </EntityType>
+        <EntityType Name="REPUESTO">
+          <Key>
+            <PropertyRef Name="ID_REPUESTO" />
+          </Key>
+          <Property Name="ID_REPUESTO" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="MARCA" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="CALIDAD" Type="String" Nullable="false" MaxLength="40" Unicode="false" FixedLength="false" />
+          <Property Name="ORIGEN" Type="String" Nullable="false" MaxLength="40" Unicode="false" FixedLength="false" />
+          <Property Name="ESTADO" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="NOMBRE_REPUESTO" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="STOCK" Relationship="Model.PERTENECIENTE" FromRole="REPUESTO" ToRole="STOCK" />
+        </EntityType>
+        <EntityType Name="STOCK">
+          <Key>
+            <PropertyRef Name="ID_STOCK" />
+          </Key>
+          <Property Name="ID_STOCK" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="CANTIDAD_STOCK" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+          <Property Name="FECHA_LLEGADA" Type="DateTime" Nullable="false" />
+          <Property Name="ID_REPUESTO" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="RUT_TALLER" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="EVT_REPUESTO_USADO" Relationship="Model.SERA_USADO" FromRole="STOCK" ToRole="EVT_REPUESTO_USADO" />
+          <NavigationProperty Name="REPUESTO" Relationship="Model.PERTENECIENTE" FromRole="STOCK" ToRole="REPUESTO" />
+          <NavigationProperty Name="TALLER" Relationship="Model.TIENE" FromRole="STOCK" ToRole="TALLER" />
+        </EntityType>
+        <EntityType Name="TALLER">
+          <Key>
+            <PropertyRef Name="RUT_TALLER" />
+          </Key>
+          <Property Name="RUT_TALLER" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="NOMBRE_TALLER" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="ROL_TALLER" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="DIRECCION_TALLER" Type="String" Nullable="false" MaxLength="60" Unicode="false" FixedLength="false" />
+          <Property Name="TELEFONO_TALLER" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="DISTRIBUIDORA" Relationship="Model.RELACION" FromRole="TALLER" ToRole="DISTRIBUIDORA" />
+          <NavigationProperty Name="PERFIL" Relationship="Model.POSEE" FromRole="TALLER" ToRole="PERFIL" />
+          <NavigationProperty Name="STOCK" Relationship="Model.TIENE" FromRole="TALLER" ToRole="STOCK" />
+        </EntityType>
+        <Association Name="USADO">
+          <End Role="AUTOMOVIL" Type="Model.AUTOMOVIL" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="EVT_REPUESTO_USADO" Type="Model.EVT_REPUESTO_USADO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AUTOMOVIL">
+              <PropertyRef Name="VIN_AUTOMOVIL" />
+            </Principal>
+            <Dependent Role="EVT_REPUESTO_USADO">
+              <PropertyRef Name="VIN_AUTOMOVIL" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PERTENECEN">
+          <End Role="DISTRIBUIDORA" Type="Model.DISTRIBUIDORA" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PERFIL" Type="Model.PERFIL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DISTRIBUIDORA">
+              <PropertyRef Name="RUT_DIST" />
+            </Principal>
+            <Dependent Role="PERFIL">
+              <PropertyRef Name="RUT_DIST" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RELACION">
+          <End Role="TALLER" Type="Model.TALLER" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="DISTRIBUIDORA" Type="Model.DISTRIBUIDORA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TALLER">
+              <PropertyRef Name="RUT_TALLER" />
+            </Principal>
+            <Dependent Role="DISTRIBUIDORA">
+              <PropertyRef Name="RUT_TALLER" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SERA_USADO">
+          <End Role="STOCK" Type="Model.STOCK" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="EVT_REPUESTO_USADO" Type="Model.EVT_REPUESTO_USADO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="STOCK">
+              <PropertyRef Name="ID_STOCK" />
+            </Principal>
+            <Dependent Role="EVT_REPUESTO_USADO">
+              <PropertyRef Name="ID_STOCK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="POSEE">
+          <End Role="TALLER" Type="Model.TALLER" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PERFIL" Type="Model.PERFIL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TALLER">
+              <PropertyRef Name="RUT_TALLER" />
+            </Principal>
+            <Dependent Role="PERFIL">
+              <PropertyRef Name="RUT_TALLER" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PERTENECIENTE">
+          <End Role="REPUESTO" Type="Model.REPUESTO" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="STOCK" Type="Model.STOCK" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="REPUESTO">
+              <PropertyRef Name="ID_REPUESTO" />
+            </Principal>
+            <Dependent Role="STOCK">
+              <PropertyRef Name="ID_REPUESTO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TIENE">
+          <End Role="TALLER" Type="Model.TALLER" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="STOCK" Type="Model.STOCK" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TALLER">
+              <PropertyRef Name="RUT_TALLER" />
+            </Principal>
+            <Dependent Role="STOCK">
+              <PropertyRef Name="RUT_TALLER" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="AUTOMOVIL">
+            <EntityTypeMapping TypeName="Model.AUTOMOVIL">
+              <MappingFragment StoreEntitySet="AUTOMOVIL">
+                <ScalarProperty Name="VIN_AUTOMOVIL" ColumnName="VIN_AUTOMOVIL" />
+                <ScalarProperty Name="MARCA_AUTOMOVIL" ColumnName="MARCA_AUTOMOVIL" />
+                <ScalarProperty Name="MODELO_AUTOMOVIL" ColumnName="MODELO_AUTOMOVIL" />
+                <ScalarProperty Name="AÑO_AUTOMOVIL" ColumnName="AÑO_AUTOMOVIL" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DISTRIBUIDORA">
+            <EntityTypeMapping TypeName="Model.DISTRIBUIDORA">
+              <MappingFragment StoreEntitySet="DISTRIBUIDORA">
+                <ScalarProperty Name="RUT_DIST" ColumnName="RUT_DIST" />
+                <ScalarProperty Name="NOMBRE_DIST" ColumnName="NOMBRE_DIST" />
+                <ScalarProperty Name="DIRECCION_DIST" ColumnName="DIRECCION_DIST" />
+                <ScalarProperty Name="TELEFONO_DIST" ColumnName="TELEFONO_DIST" />
+                <ScalarProperty Name="RUT_TALLER" ColumnName="RUT_TALLER" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EVT_REPUESTO_USADO">
+            <EntityTypeMapping TypeName="Model.EVT_REPUESTO_USADO">
+              <MappingFragment StoreEntitySet="EVT_REPUESTO_USADO">
+                <ScalarProperty Name="ID_REP_USADO" ColumnName="ID_REP_USADO" />
+                <ScalarProperty Name="FECHA_USO" ColumnName="FECHA_USO" />
+                <ScalarProperty Name="PRECIO_UNITARIO" ColumnName="PRECIO_UNITARIO" />
+                <ScalarProperty Name="ID_STOCK" ColumnName="ID_STOCK" />
+                <ScalarProperty Name="VIN_AUTOMOVIL" ColumnName="VIN_AUTOMOVIL" />
+                <ScalarProperty Name="CANTIDAD_SALIDA" ColumnName="CANTIDAD_SALIDA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PERFIL">
+            <EntityTypeMapping TypeName="Model.PERFIL">
+              <MappingFragment StoreEntitySet="PERFIL">
+                <ScalarProperty Name="USERNAME" ColumnName="USERNAME" />
+                <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />
+                <ScalarProperty Name="TIPO_PERMISO" ColumnName="TIPO_PERMISO" />
+                <ScalarProperty Name="RUT_DIST" ColumnName="RUT_DIST" />
+                <ScalarProperty Name="RUT_TALLER" ColumnName="RUT_TALLER" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="REPUESTO">
+            <EntityTypeMapping TypeName="Model.REPUESTO">
+              <MappingFragment StoreEntitySet="REPUESTO">
+                <ScalarProperty Name="ID_REPUESTO" ColumnName="ID_REPUESTO" />
+                <ScalarProperty Name="MARCA" ColumnName="MARCA" />
+                <ScalarProperty Name="CALIDAD" ColumnName="CALIDAD" />
+                <ScalarProperty Name="ORIGEN" ColumnName="ORIGEN" />
+                <ScalarProperty Name="ESTADO" ColumnName="ESTADO" />
+                <ScalarProperty Name="NOMBRE_REPUESTO" ColumnName="NOMBRE_REPUESTO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="STOCK">
+            <EntityTypeMapping TypeName="Model.STOCK">
+              <MappingFragment StoreEntitySet="STOCK">
+                <ScalarProperty Name="ID_STOCK" ColumnName="ID_STOCK" />
+                <ScalarProperty Name="CANTIDAD_STOCK" ColumnName="CANTIDAD_STOCK" />
+                <ScalarProperty Name="FECHA_LLEGADA" ColumnName="FECHA_LLEGADA" />
+                <ScalarProperty Name="ID_REPUESTO" ColumnName="ID_REPUESTO" />
+                <ScalarProperty Name="RUT_TALLER" ColumnName="RUT_TALLER" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TALLER">
+            <EntityTypeMapping TypeName="Model.TALLER">
+              <MappingFragment StoreEntitySet="TALLER">
+                <ScalarProperty Name="RUT_TALLER" ColumnName="RUT_TALLER" />
+                <ScalarProperty Name="NOMBRE_TALLER" ColumnName="NOMBRE_TALLER" />
+                <ScalarProperty Name="ROL_TALLER" ColumnName="ROL_TALLER" />
+                <ScalarProperty Name="DIRECCION_TALLER" ColumnName="DIRECCION_TALLER" />
+                <ScalarProperty Name="TELEFONO_TALLER" ColumnName="TELEFONO_TALLER" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="ModeloDatos" ZoomLevel="64">
+        <EntityTypeShape EntityType="Model.AUTOMOVIL" Width="1.5" PointX="9.75" PointY="1.375" Height="1.9802864583333335" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.DISTRIBUIDORA" Width="1.5" PointX="0.5" PointY="1.5" Height="2.3648893229166656" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.EVT_REPUESTO_USADO" Width="1.5" PointX="8.25" PointY="4.125" Height="2.5571907552083335" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.PERFIL" Width="1.5" PointX="2.125" PointY="5.125" Height="2.3648893229166656" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.REPUESTO" Width="1.5" PointX="6.75" PointY="1" Height="2.3648893229166656" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.STOCK" Width="1.5" PointX="5.5" PointY="3.875" Height="2.5571907552083326" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.TALLER" Width="1.5" PointX="3" PointY="0.75" Height="2.5571907552083317" IsExpanded="true" />
+        <AssociationConnector Association="Model.USADO" ManuallyRouted="false">
+          <ConnectorPoint PointX="10.53125" PointY="3.3552864583333335" />
+          <ConnectorPoint PointX="10.53125" PointY="5.4035953776041667" />
+          <ConnectorPoint PointX="9.75" PointY="5.4035953776041667" />
+        </AssociationConnector>
+        <AssociationConnector Association="Model.PERTENECEN" ManuallyRouted="false">
+          <ConnectorPoint PointX="1.25" PointY="3.8648893229166656" />
+          <ConnectorPoint PointX="1.25" PointY="6.3074446614583328" />
+          <ConnectorPoint PointX="2.125" PointY="6.3074446614583328" />
+        </AssociationConnector>
+        <AssociationConnector Association="Model.RELACION" ManuallyRouted="false">
+          <ConnectorPoint PointX="3.9993020935163162" PointY="0.75" />
+          <ConnectorPoint PointX="3.9993020935163162" PointY="0.5" />
+          <ConnectorPoint PointX="2.75" PointY="0.5" />
+          <ConnectorPoint PointX="2.75" PointY="2.6824446614583328" />
+          <ConnectorPoint PointX="2" PointY="2.6824446614583328" />
+        </AssociationConnector>
+        <AssociationConnector Association="Model.SERA_USADO" ManuallyRouted="false">
+          <ConnectorPoint PointX="7" PointY="5.2785953776041659" />
+          <ConnectorPoint PointX="8.25" PointY="5.2785953776041659" />
+        </AssociationConnector>
+        <AssociationConnector Association="Model.POSEE" ManuallyRouted="false">
+          <ConnectorPoint PointX="3.3125" PointY="3.3071907552083317" />
+          <ConnectorPoint PointX="3.3125" PointY="5.125" />
+        </AssociationConnector>
+        <AssociationConnector Association="Model.PERTENECIENTE" ManuallyRouted="false">
+          <ConnectorPoint PointX="6.75" PointY="2.1824446614583328" />
+          <ConnectorPoint PointX="6.1249994999999995" PointY="2.1824446614583328" />
+          <ConnectorPoint PointX="6.1249994999999995" PointY="3.875" />
+        </AssociationConnector>
+        <AssociationConnector Association="Model.TIENE" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.5" PointY="0.84375" />
+          <ConnectorPoint PointX="5.78124725" PointY="0.84375" />
+          <ConnectorPoint PointX="5.78124725" PointY="3.875" />
+        </AssociationConnector>
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>
